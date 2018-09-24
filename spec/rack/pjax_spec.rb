@@ -90,6 +90,13 @@ BODY
       get "/", {}, {"HTTP_X_PJAX" => "true"}
       expect(body).to eq(container)
     end
+
+    it "handles frozen strings" do
+      self.class.app = generate_app(:body => "test".freeze)
+
+      get "/", {}, {"HTTP_X_PJAX" => "true"}
+      expect(body).to eq("test")
+    end
   end
 
   context "a pjaxified app, upon receiving a non-pjax request" do
